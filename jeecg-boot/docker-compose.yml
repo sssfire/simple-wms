@@ -15,7 +15,7 @@ services:
     # image: jeecg-boot-mysql #remove 20220324 
     image: mysql:5.7.37 #new 20220324
     volumes: #new 20220324 
-      - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-mysql:/var/lib/mysql
+      - /Users/i068353/DevEnv/my-project/wms/simple-wms/common-storage/jeecg-boot-mysql:/var/lib/mysql
     command:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_general_ci
@@ -36,7 +36,7 @@ services:
     hostname: jeecg-boot-redis
     container_name: jeecg-boot-redis
     volumes: #new 20220324 
-      - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-redis:/data
+      - /Users/i068353/DevEnv/my-project/wms/simple-wms/common-storage/jeecg-boot-redis:/data
     networks:
       - jeecg-boot
 
@@ -51,9 +51,9 @@ services:
   #   hostname: jeecg-boot-elasticsearch
   #   container_name: jeecg-boot-elasticsearch
   #   volumes: #new 20220324 
-  #     - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-elasticsearch:/usr/share/elasticsearch/data
-  #     - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-  #     - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-elasticsearch/plugins:/usr/share/elasticsearch/plugins
+  #     - /Users/i068353/DevEnv/my-project/wms/simple-wms/common-storage/jeecg-boot-elasticsearch:/usr/share/elasticsearch/data
+  #     - /Users/i068353/DevEnv/my-project/wms/simple-wms/common-storage/jeecg-boot-elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  #     - /Users/i068353/DevEnv/my-project/wms/simple-wms/common-storage/jeecg-boot-elasticsearch/plugins:/usr/share/elasticsearch/plugins
   #   environment:
   #     - discovery.type=single-node
   #   networks:
