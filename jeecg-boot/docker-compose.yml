@@ -1,4 +1,7 @@
 version: '2'
+networks:
+  jeecg-boot:
+  
 services:
   jeecg-boot-mysql:
     build:
@@ -9,7 +12,10 @@ services:
       TZ: Asia/Shanghai
     restart: always
     container_name: jeecg-boot-mysql
-    image: jeecg-boot-mysql
+    # image: jeecg-boot-mysql #remove 20220324 
+    image: mysql:5.7.37 #new 20220324
+    volumes: #new 20220324 
+      - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-mysql:/var/lib/mysql
     command:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_general_ci
@@ -19,6 +25,8 @@ services:
       --default-authentication-plugin=caching_sha2_password
     ports:
       - 3306:3306
+    networks:
+      - jeecg-boot
 
   jeecg-boot-redis:
     image: redis:5.0
@@ -27,16 +35,50 @@ services:
     restart: always
     hostname: jeecg-boot-redis
     container_name: jeecg-boot-redis
+    volumes: #new 20220324 
+      - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-redis:/data
+    networks:
+      - jeecg-boot
 
-  jeecg-boot-system:
-    build:
-      context: ./jeecg-boot-module-system
-    restart: on-failure
-    depends_on:
-      - jeecg-boot-mysql
-      - jeecg-boot-redis
-    container_name: jeecg-boot-system
-    image: jeecg-boot-system
-    hostname: jeecg-boot-system
-    ports:
-      - 8080:8080
+##elasticsearch && elasticsearch-head
+##uncomment them if above two of them needed.
+  # jeecg-boot-elasticsearch:
+  #   image: elasticsearch:7.17.1
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   restart: always
+  #   hostname: jeecg-boot-elasticsearch
+  #   container_name: jeecg-boot-elasticsearch
+  #   volumes: #new 20220324 
+  #     - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-elasticsearch:/usr/share/elasticsearch/data
+  #     - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  #     - /Users/i068353/DevEnv/workspace/app-framework/jeecg/common-storage/jeecg-boot-elasticsearch/plugins:/usr/share/elasticsearch/plugins
+  #   environment:
+  #     - discovery.type=single-node
+  #   networks:
+  #     - jeecg-boot
+
+  # jeecg-boot-elasticsearch-head:
+  #   image: mobz/elasticsearch-head:5-alpine
+  #   ports:
+  #     - 9100:9100
+  #   restart: always
+  #   hostname: jeecg-boot-elasticsearch-head
+  #   container_name: jeecg-boot-elasticsearch-head
+  #   networks:
+  #     - jeecg-boot
+
+##jeecg-boot-system
+  # jeecg-boot-system:
+  #   build:
+  #     context: ./jeecg-boot-module-system
+  #   restart: on-failure
+  #   depends_on:
+  #     - jeecg-boot-mysql
+  #     - jeecg-boot-redis
+  #   container_name: jeecg-boot-system
+  #   image: jeecg-boot-system
+  #   hostname: jeecg-boot-system
+  #   ports:
+  #     - 8080:8080
